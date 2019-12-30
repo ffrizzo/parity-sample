@@ -1,0 +1,31 @@
+---
+
+- name: Run dist upgrade
+  apt:
+    upgrade: dist
+    update_cache: yes
+    autoremove: yes
+
+- name: APT Autoremove
+  apt:
+    autoremove: yes
+
+- name: Update GRUB
+  command: |
+    update-grub
+
+- name: Collect Instance Metadata
+  uri:
+    url: http://169.254.169.254/latest/meta-data/instance-id
+    return_content: yes
+  register: instance_metadata
+
+- name: Collect Instance Document
+  uri:
+    url: http://169.254.169.254/latest/dynamic/instance-identity/document
+    return_content: yes
+  register: instance_document
+
+- name: Collect Instance Identity
+  set_fact:
+    instance_identity: "{{ instance_document.content|from_json }}"

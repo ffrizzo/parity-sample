@@ -1,0 +1,19 @@
+---
+
+- hosts: parity
+  gather_facts: yes
+  become: yes
+
+  pre_tasks:
+    - name: Dist Upgrade
+      include: tasks/dist_upgrade.yaml  
+
+  roles:
+    - role: ffrizzo.metricbeat
+      metricbeat_version: 7.5.0
+      metricbeat_enabled: no
+
+    - role: ffrizzo.aws-inspector
+      awsagent_enabled: no    
+
+    # - role: ffrizzo.parity
