@@ -2,12 +2,23 @@
 language: python
 
 env:
-  - PACKER_VERSION=1.5.1
-  - TERRAFORM_VERSION=0.12.18
+  global:
+    - PACKER_VERSION=1.5.1
+    - TERRAFORM_VERSION=0.12.18
+
+before_install:
+  - curl -sLo /tmp/packer_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
+  - curl -sLo /tmp/terraform_linux_amd64.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 install:
-  - curl -L -o packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && unzip -d bin packer.zip
-  - curl -L -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && unzip -d bin terraform.zip
+  - unzip '/tmp/*_linux_amd64.zip' -d ~/bin/
+  - export PATH=~/bin:$PATH
+  - pip install ansible
+
+before_script:
+  - packer --version
+  - terraform --version
+  - ansible --version
 
 script:
   - cd ./packer && packer validate parity.json
