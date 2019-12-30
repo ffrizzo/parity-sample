@@ -1,0 +1,14 @@
+---
+language: python
+
+env:
+  - PACKER_VERSION=1.5.1
+  - TERRAFORM_VERSION=0.12.18
+
+install:
+  - curl -L -o packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && unzip -d bin packer.zip
+  - curl -L -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && unzip -d bin terraform.zip
+
+script:
+  - cd ./packer && packer validate parity.json
+  - cd ./terraform/global && terraform validate 
