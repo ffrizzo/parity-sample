@@ -1,0 +1,62 @@
+{
+    "variables": {
+        "ssh_username": "ubuntu",
+        "profile": "parity",
+        "aws_region": "us-east-1",
+        "vpc_id": "vpc-f701b890",
+        "subnet_id": "subnet-940802e2"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "profile": "{{user `profile`}}",
+            "region": "{{user `aws_region`}}",
+            "vpc_id": "{{user `vpc_id`}}",
+            "subnet_id": "{{user `subnet_id`}}",
+            "instance_type": "t2.micro",
+            "ssh_username": "{{user `ssh_username`}}",
+            "iam_instance_profile": "readonly-profile",
+            "ami_virtualization_type": "hvm",
+            "ami_name": "parity-{{isotime | clean_resource_name}}",
+            "ami_regions": [
+                "us-east-2",
+                "us-west-1",
+                "us-west-2"
+            ],
+            "launch_block_device_mappings": [
+                {
+                    "device_name": "/dev/sda1",
+                    "volume_type": "standard",
+                    "volume_size": 10,
+                    "delete_on_termination": true
+                }
+            ],
+            "source_ami_filter": {
+                "owners": [
+                    "099720109477"
+                ],
+                "most_recent": true,
+                "filters": {
+                    "virtualization-type": "hvm",
+                    "name": "*ubuntu-bionic-18.04-amd64-server-*",
+                    "root-device-type": "ebs"
+                }
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "host_alias": "parity",
+            "user": "{{user `ssh_username`}}",
+            "playbook_file": "../ansible/playbook_packer.yaml",
+            "ansible_env_vars": [
+                "ANSIBLE_HOST_KEY_CHECKING=False",
+                "AWS_PROFILE={{user `profile`}}"
+            ],
+            "extra_arguments": [
+                "-vvvv"
+            ]
+        }
+    ]
+}
