@@ -5,6 +5,7 @@ env:
   global:
     - PACKER_VERSION=1.5.1
     - TERRAFORM_VERSION=0.12.18
+    - ANSIBLE_VERSION=2.9.2
 
 before_install:
   - curl -sLo /tmp/packer_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
@@ -13,7 +14,7 @@ before_install:
 install:
   - unzip '/tmp/*_linux_amd64.zip' -d ~/bin/
   - export PATH=~/bin:$PATH
-  - pip install ansible
+  - pip install ansible==${ANSIBLE_VERSION}
 
 before_script:
   - packer --version
@@ -21,5 +22,5 @@ before_script:
   - ansible --version
 
 script:
-  - cd ./packer && packer validate parity.json
-  - cd ./terraform/global && terraform validate 
+  - cd $TRAVIS_BUILD_DIR/packer && packer validate parity.json
+  - cd $TRAVIS_BUILD_DIR/terraform/global && terraform validate 
