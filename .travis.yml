@@ -23,4 +23,4 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR/packer && packer validate parity.json
-  - cd $TRAVIS_BUILD_DIR/terraform/global && terraform validate 
+  - cd $TRAVIS_BUILD_DIR/terraform/global && terraform init --backend=false && terraform validate 
