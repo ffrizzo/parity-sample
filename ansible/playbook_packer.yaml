@@ -16,4 +16,4 @@
     - role: ffrizzo.aws-inspector
       awsagent_enabled: no    
 
-    # - role: ffrizzo.parity
+    - role: ffrizzo.parity

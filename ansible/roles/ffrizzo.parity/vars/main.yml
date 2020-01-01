@@ -1,2 +1,4 @@
 ---
 # vars file for ffrizzo.parity
+
+parity_url: "{{ parity_mirror }}/ethereum/v{{ parity_version }}/{{ parity_platform }}/parity"

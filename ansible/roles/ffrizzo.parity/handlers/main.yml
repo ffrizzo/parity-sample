@@ -1,2 +1,18 @@
 ---
 # handlers file for ffrizzo.parity
+
+- name: restart parity
+  systemd:
+    name: "{{ parity_service }}"
+    state: restarted
+    daemon_reload: true
+
+- name: start parity
+  systemd:
+    name: "{{ parity_service }}"
+    state: started
+
+- name: stop parity
+  systemd:
+    name: "{{ parity_service }}"
+    state: stopped

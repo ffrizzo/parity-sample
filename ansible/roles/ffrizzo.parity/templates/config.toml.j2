@@ -1,0 +1,51 @@
+[parity]
+chain = "{{ parity_chain }}"
+mode = "{{ parity_mode }}"
+
+# Blockchain and settings will be stored in /opt/parity.
+base_path = "{{ parity_dir }}"
+
+{% if parity_mode == 'light' %}
+light = true
+{% endif %}
+
+[rpc]
+# Turn on additional processing threads in all HTTP JSON-RPC servers. Setting this to non-zero value allows parallel execution of cpu-heavy queries.
+processing_threads = 2
+{% if parity_rpc_allowed_hosts != '' %}
+hosts = {{ parity_rpc_allowed_hosts }}
+{% endif %}
+{% if parity_rpc_address != '' %}
+interface = "{{ parity_rpc_address }}"
+{% endif %}
+{% if parity_rpc_port != '' %}
+port = {{ parity_rpc_port }}
+{% endif %}
+
+[websockets]
+{% if parity_ws_origins != '' %}
+origins = {{ parity_ws_origins }}
+{% endif %}
+{% if parity_ws_address != '' %}
+interface = "{{ parity_ws_address }}"
+{% endif %}
+{% if parity_ws_port != '' %}
+port = {{ parity_ws_port }}
+{% endif %}
+{% if parity_ws_allowed_hosts != '' %}
+hosts = {{ parity_ws_allowed_hosts }}
+{% endif %}
+
+[footprint]
+# Increase performance on SSD.
+db_compaction = "ssd"
+# Prune old state data. Maintains journal overlay - fast but extra 50MB of memory used.
+pruning = "fast"
+# If defined will never use more than {{ parity_cache }}MB for all caches. (Overrides other cache settings).
+cache_size = {{ parity_cache }}
+
+[misc]
+# Logs will be stored at /opt/parity/parity.log.
+log_file = "{{ parity_dir }}/parity.log"
+# Enables colors in logs.
+color = false
