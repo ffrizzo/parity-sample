@@ -23,4 +23,11 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR/packer && packer validate parity.json
-  - cd $TRAVIS_BUILD_DIR/terraform/global && terraform init --backend=false && terraform validate 
+  - cd $TRAVIS_BUILD_DIR/terraform/ &&
+    if [[ `terraform fmt -recursive | wc -c` -ne 0 ]]; then echo "terraform files need be formatted"; exit 1; fi
+  - cd $TRAVIS_BUILD_DIR/terraform/global && 
+    terraform init --backend=false && 
+    terraform validate
+  - cd $TRAVIS_BUILD_DIR/terraform/parity && 
+    terraform init --backend=false && 
+    terraform validate    
