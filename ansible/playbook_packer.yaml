@@ -58,7 +58,3 @@
               location /rpc {
                 try_files $uri $uri/ @app;
               }
-
-              location /ws {
-                try_files $uri $uri/ @app;
-              }

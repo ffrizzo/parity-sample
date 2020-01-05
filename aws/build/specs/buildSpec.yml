@@ -1,0 +1,23 @@
+version: 0.2
+run-as: root
+env:
+  variables:
+    PACKER_VERSION: ""
+    ANSIBLE_VERSION: ""
+phases:
+    install:
+        run-as: root
+        runtime-versions:
+          python: 3.7
+        commands:
+            - cd /usr/bin
+            - curl -sLo packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
+            - unzip packer_${PACKER_VERSION}_linux_amd64.zip
+            - packer version
+            - pip install ansible==${ANSIBLE_VERSION}
+            - ansible-plabook --version
+    build:
+        run-as: root
+        commands:
+            - cd ${CODEBUILD_SRC_DIR}/packer
+            - packer build parity.json

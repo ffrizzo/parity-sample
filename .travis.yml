@@ -22,7 +22,8 @@ before_script:
   - ansible --version
 
 script:
-  - cd $TRAVIS_BUILD_DIR/packer && packer validate parity.json
+  - cd $TRAVIS_BUILD_DIR/packer && 
+    packer validate parity.json
   - cd $TRAVIS_BUILD_DIR/terraform/ &&
     if [[ `terraform fmt -recursive | wc -c` -ne 0 ]]; then echo "terraform files need be formatted"; exit 1; fi
   - cd $TRAVIS_BUILD_DIR/terraform/global && 
@@ -30,4 +31,12 @@ script:
     terraform validate
   - cd $TRAVIS_BUILD_DIR/terraform/parity && 
     terraform init --backend=false && 
-    terraform validate    
+    terraform validate 
+    
+deploy:
+    provider: s3
+    access_key_id: "$S3_ACCESS_KEY"
+    secret_access_key: "$S3_SECRET_KEY"
+    bucket: "$S3_BUCKET"
+    on:
+      tags: true
