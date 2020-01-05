@@ -17,8 +17,8 @@ resource "aws_key_pair" "key_pair" {
 module "pipeline" {
   source = "../modules/pipeline"
 
-  environment       = var.env_name
-  
+  environment = var.env_name
+
   github_owner      = var.github_owner
   github_repository = var.github_repository
   github_branch     = var.github_branch
