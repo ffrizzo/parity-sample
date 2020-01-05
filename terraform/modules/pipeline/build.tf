@@ -39,6 +39,9 @@ resource "aws_iam_role_policy" "codebuild_policy" {
       "Effect": "Allow",
       "Action": [
         "ec2:CreateNetworkInterface",
+        "ec2:CreateImage",
+        "ec2:CopyImage",
+        "ec2:CreateKeyPair",
         "ec2:DescribeDhcpOptions",
         "ec2:DescribeNetworkInterfaces",
         "ec2:DeleteNetworkInterface",

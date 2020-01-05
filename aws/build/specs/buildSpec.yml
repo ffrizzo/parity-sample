@@ -15,7 +15,7 @@ phases:
             - unzip packer_${PACKER_VERSION}_linux_amd64.zip
             - packer version
             - pip install ansible==${ANSIBLE_VERSION}
-            - ansible-plabook --version
+            - ansible-playbook --version
     build:
         run-as: root
         commands:
