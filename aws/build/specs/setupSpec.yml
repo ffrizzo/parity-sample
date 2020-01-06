@@ -1,0 +1,21 @@
+version: 0.2
+run-as: root
+env:
+  variables:
+    TERRAFORM_VERSION: ""
+    ANSIBLE_VERSION: ""
+phases:
+    install:
+        run-as: root
+        runtime-versions:
+          python: 3.7
+        commands:
+            - cd /usr/bin
+            - curl -sLo terraform_${TERRAFORM_VERSION}_linux_amd64.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+            - unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+            - terraform version
+    build:
+        run-as: root
+        commands:
+            - cd ${CODEBUILD_SRC_DIR}/terraform/parity/environment
+            - terraform apply

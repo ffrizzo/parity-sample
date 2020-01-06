@@ -1,10 +1,10 @@
-resource "aws_iam_instance_profile" "readonly_profile" {
-  name = "readonly-profile"
-  role = aws_iam_role.readonly_role.name
+resource "aws_iam_instance_profile" "profile" {
+  name = "packer-profile"
+  role = aws_iam_role.role.name
 }
 
-resource "aws_iam_role" "readonly_role" {
-  name = "readonly-role"
+resource "aws_iam_role" "role" {
+  name = "packer-role"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -24,9 +24,9 @@ resource "aws_iam_role" "readonly_role" {
 EOF
 }
 
-resource "aws_iam_role_policy" "readonly_role_policy" {
-  name = "readonly-role-policy"
-  role = aws_iam_role.readonly_role.id
+resource "aws_iam_role_policy" "role_policy" {
+  name = "packer-role-policy"
+  role = aws_iam_role.role.id
 
   policy = <<EOF
 {
@@ -49,14 +49,14 @@ resource "aws_iam_role_policy" "readonly_role_policy" {
 EOF
 }
 
-output "readonly_profile_id" {
-  value = aws_iam_instance_profile.readonly_profile.id
+output "profile_id" {
+  value = aws_iam_instance_profile.profile.id
 }
 
-output "readonly_profile_arn" {
-  value = aws_iam_instance_profile.readonly_profile.arn
+output "profile_arn" {
+  value = aws_iam_instance_profile.profile.arn
 }
 
-output "readonly_profile_name" {
-  value = aws_iam_instance_profile.readonly_profile.name
+output "profile_name" {
+  value = aws_iam_instance_profile.profile.name
 }
