@@ -127,14 +127,10 @@ resource "aws_codebuild_project" "build" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "PACKER_VERSION"
-      value = var.packer_version
+      name  = "TERRAFORM_VERSION"
+      value = var.terraform_version
     }
 
-    environment_variable {
-      name  = "ANSIBLE_VERSION"
-      value = var.ansible_version
-    }
   }
 
   source {

@@ -27,14 +27,8 @@ variable "build_spec" {
 }
 
 
-variable "packer_version" {
+variable "terraform_version" {
   type        = string
   description = "Packer version"
-  default     = "1.5.1"
-}
-
-variable "ansible_version" {
-  type        = string
-  description = "Ansible version"
-  default     = "2.9.2"
+  default     = "0.12.18"
 }
