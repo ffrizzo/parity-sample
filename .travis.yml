@@ -38,9 +38,6 @@ script:
   - cd $TRAVIS_BUILD_DIR/terraform/parity/vpc && 
     terraform init --backend=false && 
     terraform validate 
-  - cd $TRAVIS_BUILD_DIR/terraform/parity/environment && 
-    terraform init --backend=false && 
-    terraform validate     
     
 deploy:
     provider: s3
