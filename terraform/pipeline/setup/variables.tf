@@ -24,6 +24,7 @@ variable "github_branch" {
 
 variable "build_spec" {
   description = "BuildSpec in base64"
+  default     = "./aws/build/specs/setupSpec.yml"
 }
 
 

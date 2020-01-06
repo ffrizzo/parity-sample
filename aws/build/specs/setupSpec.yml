@@ -3,7 +3,7 @@ run-as: root
 env:
   variables:
     TERRAFORM_VERSION: ""
-    ANSIBLE_VERSION: ""
+    ENV_NAME: ""
 phases:
     install:
         run-as: root
@@ -18,4 +18,5 @@ phases:
         run-as: root
         commands:
             - cd ${CODEBUILD_SRC_DIR}/terraform/parity/environment
-            - terraform apply
+            - terraform init -backend-config="key=states/parity-sample/parity/environemnt/${ENV_NAME}/terraform.tfstate"
+            - terraform apply -var env_name=${ENV_NAME}
